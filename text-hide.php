@@ -1,13 +1,13 @@
 <?php
 
 /**
- * @package my-hello
+ * @package text-hide
  * @version 1.0
  */
 /*
-  Plugin Name:  My Hello
+  Plugin Name:  Text Hide
   Plugin URI:   https://developer.wordpress.org/plugins/the-basics/
-  Description:  My first plugin hello
+  Description:  This pluggin is to hide certainly text in document
   Version:      201801
   Author:       hinfo.com
   Author URI:   https://henriqueantunes.herokuapp.com
@@ -34,20 +34,7 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
-/*
- * My Hello is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  any later version.
 
-  My Hello is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with My Hello. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
- */
 ?>
 <?php
 
@@ -72,7 +59,7 @@ function ewp_install_hook() {
     }
 
     // Vamos criar um opção para ser guardada na base-de-dados
-    // e incluir um valor por defeito.
+    // e incluir um valor por default.
     add_option('ewp_opcao', '0');
 }
 ?>
@@ -80,7 +67,7 @@ function ewp_install_hook() {
 <?php
 
 //add_action('init', 'hello');
-//add_filter("the_content", "changeText");
+//add_filter("the_content", "hideText");
 function hello() {
     echo '<script> alert("Hello my friend");</script>';
 
@@ -88,7 +75,7 @@ function hello() {
      * "entry-title"
      */
 }
-function changeText($the_Post){
+function hideText($the_Post){
     $the_New_Post = str_replace("asdf", "Teste Plugin", $the_Post);
     return $the_New_Post;
 }
