@@ -8,7 +8,7 @@
   Plugin Name:  Text Hide
   Plugin URI:   https://developer.wordpress.org/plugins/the-basics/
   Description:  This pluggin is to hide certainly text in document
-  Version:      201801
+  Version:      teste1
   Author:       hinfo.com
   Author URI:   https://henriqueantunes.herokuapp.com
   License:      GPL2
@@ -35,26 +35,18 @@
  *      MA 02110-1301, USA.
  */
 
-?>
-<?php
-
 define('WP_DEBUG', true);
 
 defined('ABSPATH') or die('Sem chances');
-
-require('./wp-load.php');
-?>
-<?php
-
 // Registamos a função para correr na ativação do plugin
 register_activation_hook(__FILE__, 'ewp_install_hook');
 
 function ewp_install_hook() {
-    // Vamos testar a versão do PHP e do WordPress
+    // Teste de versão do PHP e do WordPress
     // caso as versões sejam antigas, desativamos
     // o nosso plugin.
-    if (version_compare(PHP_VERSION, '5.2.1', '>')
-            or version_compare(get_bloginfo('version'), '3.3', '>')) {
+    if (version_compare(PHP_VERSION, '5.2.1', '<')
+            or version_compare(get_bloginfo('version'), '3.3', '<')) {
         deactivate_plugins(basename(__FILE__));
     }
 
@@ -62,21 +54,49 @@ function ewp_install_hook() {
     // e incluir um valor por default.
     add_option('ewp_opcao', '0');
 }
-?>
 
-<?php
+add_action('wp_head', 'add_jquery');
+add_action("wp_head", 'hide_text2');
 
-//add_action('init', 'hello');
-//add_filter("the_content", "hideText");
-function hello() {
-    echo '<script> alert("Hello my friend");</script>';
+/**
+ * Adicionando o jQuery para manipulacao do DOM
+ */
+function add_jquery() {
+    ?>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>"
+    <?php
 
-    /**
-     * "entry-title"
-     */
 }
-function hideText($the_Post){
-    $the_New_Post = str_replace("asdf", "Teste Plugin", $the_Post);
-    return $the_New_Post;
+
+function hide_text() {
+    ?>
+    <script>
+        $(document).ready(function () {
+            $("h1").click(function () {
+                $(".test-content").hide();
+            });
+        });
+    </script>
+    <?php
+
+}
+
+function hide_text2() {
+    ?>
+    <script>
+        $(function(){
+            var block = document.getElementById("block-content");
+            console.log("valor de block: " + block);
+            if (!block.null) {
+                $(".test-content").hide();
+                alert("Você Não tem permissão para visualizar este conteúdo!");
+            } else {
+                console.log("Entrou no else");
+                alert("Tudo certo!");
+            }
+        });
+    </script>
+    <?php
+
 }
 ?>
